@@ -8,4 +8,5 @@ A small C++ library for processing 3D point clouds. Supported functionality incl
 * PCL
 * OpenCV
 * [SiftGPU](https://github.com/pitzer/SiftGPU)
+* [namaris](https://github.com/aecins/namaris)
 * CUDA (optional)
