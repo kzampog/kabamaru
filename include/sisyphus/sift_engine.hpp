@@ -1,7 +1,7 @@
 #ifndef SISYPHUS_SIFT_ENGINE_HPP
 #define SISYPHUS_SIFT_ENGINE_HPP
 
-#include <siftgpu/SiftGPU.h>
+#include <SiftGPU.h>
 #include <opencv2/core/core.hpp>
 
 class SIFTEngine {

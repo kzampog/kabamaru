@@ -6,7 +6,7 @@
 
 SIFTEngine::SIFTEngine() {
 	matcher = SiftMatchGPU(4096);
-	char* sift_params[] = {(char*)"fo", (char*)"-1", (char*)"-v", (char*)"0", (char*)"-s", (char*)"-m", (char*)"1", (char*)"-packed", (char*)"-cuda"};
+	char* sift_params[] = {(char*)"fo", (char*)"-1", (char*)"-v", (char*)"0", (char*)"-s", (char*)"-m", (char*)"1", (char*)"-pack", (char*)"-glsl"};
 	sift.ParseParam(sizeof(sift_params)/sizeof(char*), sift_params);
 	if (sift.CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED) {
 		std::cout << "SiftGPU error" << std::endl;
