@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 add_definitions("-std=c++11 -O2")
 
 find_package(SIFTGPU REQUIRED)
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3 REQUIRED)
 find_package(PCL 1.8 REQUIRED)
 find_package(namaris REQUIRED)
 
