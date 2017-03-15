@@ -243,9 +243,12 @@ int estimateRigidTransformSIFT2DTo3DRANSAC(const Eigen::MatrixXf &frame_loc, con
 	cv::eigen2cv(model_loc_tmp, model_loc_tmp_cv);
 	cv::eigen2cv(frame_loc_tmp, frame_loc_tmp_cv);
 
+	double confidence = static_cast<double>(min_inlier_count)/static_cast<double>(frame_ind.size());
+	if (confidence >= 1) confidence = 0.99;
+
 	inliers.clear();
 	cv::Mat R_cv, t_cv;
-	cv::solvePnPRansac(model_loc_tmp_cv, frame_loc_tmp_cv, K, d, R_cv, t_cv, false, iter, dist_thresh, min_inlier_count, inliers, CV_ITERATIVE);
+	cv::solvePnPRansac(model_loc_tmp_cv, frame_loc_tmp_cv, K, d, R_cv, t_cv, false, iter, dist_thresh, confidence, inliers, cv::SOLVEPNP_ITERATIVE);
 	cv::Rodrigues(R_cv, R_cv);
 
 	Eigen::Matrix3f R_tmp;
