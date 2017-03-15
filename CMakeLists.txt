@@ -4,7 +4,7 @@ project(sisyphus)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 # compile with C++11 support
-add_definitions("-std=c++11 -O2")
+add_definitions("-std=c++11")
 
 find_package(SIFTGPU REQUIRED)
 find_package(OpenCV 3 REQUIRED)
