@@ -235,9 +235,7 @@ SLAM::View SLAM::createView(const cv::Mat &img, const cv::Mat &K, const cv::Mat 
 }
 
 int SLAM::estimateViewPose(const View &v, Eigen::Matrix4f& pose) {
-
 	Eigen::Matrix4f tform_est = Eigen::Matrix4f::Identity();
-
 	Eigen::Matrix4f tform_sift;
 	int ransac_success;
 	if (use_sift) {
@@ -313,7 +311,8 @@ void SLAM::clearUnregisteredViews(){
 }
 
 void SLAM::initializeModelFromView(const View& v) {
-	model.pointCloud = v.pointCloud;
+	clearModel();
+	*model.pointCloud = *v.pointCloud;
 	model.keypointWorldCoordinates = v.keypointWorldCoordinates;
 	model.keypointDescriptors = v.keypointDescriptors;
 	model.registeredViews.push_back(v);
