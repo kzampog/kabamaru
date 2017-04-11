@@ -209,4 +209,84 @@ typename pcl::PointCloud<PointOutT>::Ptr colorPointCloudFromImageView(const type
 	return cloud_out;
 }
 
+template<typename PointT>
+typename pcl::PointCloud<PointT>::Ptr pointCloudFromDepthImage(const cv::Mat &depth_img, const Eigen::Matrix3f &K, bool org) {
+	typename pcl::PointCloud<PointT>::Ptr res;
+	if (org) {
+		res = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(depth_img.cols, depth_img.rows));
+		for (int row = 0; row < depth_img.rows; ++row) {
+			for (int col = 0; col < depth_img.cols; ++col) {
+				float d = (float)(depth_img.at<unsigned short>(row,col));
+				PointT pt;
+				pt.x = (col - K(0,2)) * d / K(0,0);
+				pt.y = (row - K(1,2)) * d / K(1,1);
+				pt.z = d;
+				res->at(col,row) = pt;
+			}
+		}
+	} else {
+		res = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>);
+		res->resize(depth_img.cols*depth_img.rows);
+		int num = 0;
+		for (int row = 0; row < depth_img.rows; ++row) {
+			for (int col = 0; col < depth_img.cols; ++col) {
+				float d = (float)(depth_img.at<unsigned short>(row,col));
+				if (d > 0.0) {
+					PointT pt;
+					pt.x = (col - K(0,2)) * d / K(0,0);
+					pt.y = (row - K(1,2)) * d / K(1,1);
+					pt.z = d;
+					res->at(num++) = pt;
+				}
+			}
+		}
+		res->resize(num);
+	}
+	return res;
+}
+
+template<typename PointT>
+typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rgb_img, const cv::Mat &depth_img, const Eigen::Matrix3f &K, bool org) {
+	typename pcl::PointCloud<PointT>::Ptr res;
+	if (org) {
+		res = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(depth_img.cols, depth_img.rows));
+		for (int row = 0; row < depth_img.rows; ++row) {
+			for (int col = 0; col < depth_img.cols; ++col) {
+				float d = (float)(depth_img.at<unsigned short>(row,col));
+				cv::Vec3b c = rgb_img.at<cv::Vec3b>(row,col);
+				PointT pt;
+				pt.x = (col - K(0,2)) * d / K(0,0);
+				pt.y = (row - K(1,2)) * d / K(1,1);
+				pt.z = d;
+				pt.r = c[2];
+				pt.g = c[1];
+				pt.b = c[0];
+				res->at(col,row) = pt;
+			}
+		}
+	} else {
+		res = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>);
+		res->resize(depth_img.cols*depth_img.rows);
+		int num = 0;
+		for (int row = 0; row < depth_img.rows; ++row) {
+			for (int col = 0; col < depth_img.cols; ++col) {
+				float d = (float)(depth_img.at<unsigned short>(row,col));
+				cv::Vec3b c = rgb_img.at<cv::Vec3b>(row,col);
+				if (d > 0.0) {
+					PointT pt;
+					pt.x = (col - K(0,2)) * d / K(0,0);
+					pt.y = (row - K(1,2)) * d / K(1,1);
+					pt.z = d;
+					pt.r = c[2];
+					pt.g = c[1];
+					pt.b = c[0];
+					res->at(num++) = pt;
+				}
+			}
+		}
+		res->resize(num);
+	}
+	return res;
+}
+
 #endif /* SISYPHUS_REGISTRATION_UTILITIES_HPP */
