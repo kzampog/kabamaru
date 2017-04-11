@@ -216,7 +216,7 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromDepthImage(const cv::Mat &de
 		res = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(depth_img.cols, depth_img.rows));
 		for (int row = 0; row < depth_img.rows; ++row) {
 			for (int col = 0; col < depth_img.cols; ++col) {
-				float d = (float)(depth_img.at<unsigned short>(row,col));
+				float d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
 				PointT pt;
 				pt.x = (col - K(0,2)) * d / K(0,0);
 				pt.y = (row - K(1,2)) * d / K(1,1);
@@ -230,7 +230,7 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromDepthImage(const cv::Mat &de
 		int num = 0;
 		for (int row = 0; row < depth_img.rows; ++row) {
 			for (int col = 0; col < depth_img.cols; ++col) {
-				float d = (float)(depth_img.at<unsigned short>(row,col));
+				float d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
 				if (d > 0.0) {
 					PointT pt;
 					pt.x = (col - K(0,2)) * d / K(0,0);
@@ -252,7 +252,7 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rg
 		res = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(depth_img.cols, depth_img.rows));
 		for (int row = 0; row < depth_img.rows; ++row) {
 			for (int col = 0; col < depth_img.cols; ++col) {
-				float d = (float)(depth_img.at<unsigned short>(row,col));
+				float d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
 				cv::Vec3b c = rgb_img.at<cv::Vec3b>(row,col);
 				PointT pt;
 				pt.x = (col - K(0,2)) * d / K(0,0);
@@ -270,7 +270,7 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rg
 		int num = 0;
 		for (int row = 0; row < depth_img.rows; ++row) {
 			for (int col = 0; col < depth_img.cols; ++col) {
-				float d = (float)(depth_img.at<unsigned short>(row,col));
+				float d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
 				cv::Vec3b c = rgb_img.at<cv::Vec3b>(row,col);
 				if (d > 0.0) {
 					PointT pt;
