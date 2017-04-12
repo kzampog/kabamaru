@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_REGISTRATION_UTILITIES_HPP
-#define SISYPHUS_REGISTRATION_UTILITIES_HPP
+#ifndef REGISTRATION_UTILITIES_HPP
+#define REGISTRATION_UTILITIES_HPP
 
 #include <pcl/filters/extract_indices.h>
 #include <opencv2/core/eigen.hpp>
@@ -289,4 +289,4 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rg
 	return res;
 }
 
-#endif /* SISYPHUS_REGISTRATION_UTILITIES_HPP */
+#endif /* REGISTRATION_UTILITIES_HPP */

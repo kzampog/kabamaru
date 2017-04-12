@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_GRAPH_UTILITIES_HPP
-#define SISYPHUS_GRAPH_UTILITIES_HPP
+#ifndef GRAPH_UTILITIES_HPP
+#define GRAPH_UTILITIES_HPP
 
 #include <vector>
 #include <set>
@@ -18,4 +18,4 @@ bool cliqueCheck(const std::vector<std::vector<char> > &adj_mat, const std::vect
 
 std::vector<std::vector<int> > findCliques(const std::vector<std::vector<char> > &adj_mat);
 
-#endif /* SISYPHUS_GRAPH_UTILITIES_HPP */
+#endif /* GRAPH_UTILITIES_HPP */

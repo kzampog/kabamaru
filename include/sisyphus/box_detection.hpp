@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_BOX_DETECTION_HPP
-#define SISYPHUS_BOX_DETECTION_HPP
+#ifndef BOX_DETECTION_HPP
+#define BOX_DETECTION_HPP
 
 #include <chrono>
 #include <random>
@@ -781,4 +781,4 @@ std::vector<Box<PointT> > detectBoxes(const typename pcl::PointCloud<PointT>::Co
 	return boxes;
 }
 
-#endif /* SISYPHUS_BOX_DETECTION_HPP */
+#endif /* BOX_DETECTION_HPP */

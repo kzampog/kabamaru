@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_SIFT_RGBD_SLAM_HPP
-#define SISYPHUS_SIFT_RGBD_SLAM_HPP
+#ifndef SIFT_RGBD_SLAM_HPP
+#define SIFT_RGBD_SLAM_HPP
 
 #include <queue>
 #include <pcl/point_types.h>
@@ -87,6 +87,7 @@ public:
 	float getMLSRadius();
 	bool getMLSPolynomialFit();
 
+	View createView(const cv::Mat &rgb_img, const cv::Mat &depth_img, const Eigen::Matrix3f &K, const Eigen::Matrix4f &pose = Eigen::Matrix4f::Identity());
 	View createView(const pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr &cloud, const Eigen::Matrix4f &pose = Eigen::Matrix4f::Identity());
 	View createView(const pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr &cloud, const cv::Mat &K, const cv::Mat &d, const Eigen::Matrix4f &pose = Eigen::Matrix4f::Identity());
 	View createView(const pcl::PointCloud<pcl::PointXYZ>::ConstPtr &cloud, const cv::Mat &img, const cv::Mat &K, const cv::Mat &d, const Eigen::Matrix4f &pose = Eigen::Matrix4f::Identity());
@@ -124,4 +125,4 @@ public:
 	void writeSceneModel(const std::string &dir_name);
 };
 
-#endif /* SISYPHUS_SIFT_RGBD_SLAM_HPP */
+#endif /* SIFT_RGBD_SLAM_HPP */

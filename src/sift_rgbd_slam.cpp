@@ -150,10 +150,44 @@ bool SLAM::getMLSPolynomialFit() {
 	return mls_poly_fit;
 }
 
+SLAM::View SLAM::createView(const cv::Mat &rgb_img, const cv::Mat &depth_img, const Eigen::Matrix3f &K, const Eigen::Matrix4f &pose) {
+	View v;
+	rgb_img.copyTo(v.imageRGB);
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud = pointCloudFromRGBDImages<pcl::PointXYZRGB>(rgb_img, depth_img, K, true);
+	cv::Mat K_cv;
+	cv::eigen2cv(K, K_cv);
+	K_cv.copyTo(v.intrinsicsMatrix);
+
+	std::vector<SiftGPU::SiftKeypoint> keys;
+	sift_engine.detectFeatures(v.imageRGB, keys, v.keypointDescriptors);
+	v.keypointImageCoordinates = extractSIFTKeypoint2DCoordinates(keys);
+	extractKeypoint3DCoordinatesFromOrganizedPointCloud<pcl::PointXYZRGB>(cloud, v.keypointImageCoordinates, v.keypointDescriptors, v.keypointWorldCoordinates);
+
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_d = downSamplePointCloud<pcl::PointXYZRGB>(cloud, model_res);
+	pcl::PointCloud<pcl::PointXYZRGBNormal>::Ptr cloud_f = estimatePointCloudNormals<pcl::PointXYZRGB,pcl::PointXYZRGBNormal>(cloud_d, normal_radius);
+
+	std::vector<int> tmp;
+	pcl::removeNaNFromPointCloud(*cloud_f, *cloud_f, tmp);
+	pcl::removeNaNNormalsFromPointCloud(*cloud_f, *cloud_f, tmp);
+	v.pointCloud = cloud_f;
+	v.frustum = viewConeFromPointCloud<pcl::PointXYZRGBNormal>(cloud_f);
+
+	v.initialPose = pose;
+	v.pose = pose;
+	Eigen::Matrix3f R = pose.block<3,3>(0,0);
+	Eigen::Vector3f t = pose.block<3,1>(0,3);
+	transformConvexPolytope(v.frustum, pose);
+	v.keypointWorldCoordinates = (R*v.keypointWorldCoordinates).colwise() + t;
+	pcl::transformPointCloudWithNormals(*v.pointCloud, *v.pointCloud, pose);
+
+	return v;
+}
+
 SLAM::View SLAM::createView(const pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr &cloud, const Eigen::Matrix4f &pose) {
 	View v;
 	v.imageRGB = organizedPointCloudToRGBImage<pcl::PointXYZRGB>(cloud);
 	// v.imageDepth = organizedPointCloudToDepthImage<pcl::PointXYZRGB>(cloud);
+
 	std::vector<SiftGPU::SiftKeypoint> keys;
 	sift_engine.detectFeatures(v.imageRGB, keys, v.keypointDescriptors);
 	v.keypointImageCoordinates = extractSIFTKeypoint2DCoordinates(keys);

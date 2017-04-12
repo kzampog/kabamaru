@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_IO_UTILITIES_HPP
-#define SISYPHUS_IO_UTILITIES_HPP
+#ifndef IO_UTILITIES_HPP
+#define IO_UTILITIES_HPP
 
 #include <fstream>
 #include <Eigen/Dense>
@@ -48,4 +48,4 @@ void writeSIFTModelToFile(const std::string &fname, const Eigen::MatrixXf &loc, 
 
 void readStereoRigParametersFromXMLFile(const std::string &fname, cv::Mat &K0, cv::Mat &d0, cv::Size &im0_size, cv::Mat &K1, cv::Mat &d1, cv::Size &im1_size, cv::Mat &R, cv::Mat &t);
 
-#endif /* SISYPHUS_IO_UTILITIES_HPP */
+#endif /* IO_UTILITIES_HPP */

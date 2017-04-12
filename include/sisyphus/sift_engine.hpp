@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_SIFT_ENGINE_HPP
-#define SISYPHUS_SIFT_ENGINE_HPP
+#ifndef SIFT_ENGINE_HPP
+#define SIFT_ENGINE_HPP
 
 #include <SiftGPU.h>
 #include <opencv2/core/core.hpp>
@@ -15,4 +15,4 @@ public:
 	void getCorrespondences(const std::vector<float> &src_descr, const std::vector<float> &dst_descr, std::vector<int> &src_ind, std::vector<int> &dst_ind);
 };
 
-#endif /* SISYPHUS_SIFT_ENGINE_HPP */
+#endif /* SIFT_ENGINE_HPP */

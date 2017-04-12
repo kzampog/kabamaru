@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_BOX_FITTING_HPP
-#define SISYPHUS_BOX_FITTING_HPP
+#ifndef BOX_FITTING_HPP
+#define BOX_FITTING_HPP
 
 #include <set>
 #include <sisyphus/pointcloud_utilities.hpp>
@@ -361,4 +361,4 @@ bool fitMaximumContactBoundingBoxConstrained(const typename pcl::PointCloud<Poin
 	return success_any;
 }
 
-#endif /* SISYPHUS_BOX_FITTING_HPP */
+#endif /* BOX_FITTING_HPP */

@@ -1,5 +1,5 @@
-#ifndef SISYPHUS_POINTCLOUD_UTILITIES_HPP
-#define SISYPHUS_POINTCLOUD_UTILITIES_HPP
+#ifndef POINTCLOUD_UTILITIES_HPP
+#define POINTCLOUD_UTILITIES_HPP
 
 #include <pcl/filters/conditional_removal.h>
 #include <pcl/filters/impl/plane_clipper3D.hpp>
@@ -303,4 +303,4 @@ int refineTransformICP(const typename pcl::PointCloud<PointT>::ConstPtr &src, co
 	return success;
 }
 
-#endif /* SISYPHUS_POINTCLOUD_UTILITIES_HPP */
+#endif /* POINTCLOUD_UTILITIES_HPP */
