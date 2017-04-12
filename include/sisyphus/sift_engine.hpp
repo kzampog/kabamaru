@@ -5,6 +5,7 @@
 #include <opencv2/core/core.hpp>
 
 class SIFTEngine {
+private:
 	SiftGPU sift;
 	SiftMatchGPU matcher;
 	int match_buff[4096][2];
