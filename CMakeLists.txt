@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # compile with C++11 support
 add_definitions("-std=c++11")
 
-find_package(CUDA REQUIRED)
+find_package(CUDA)
 find_package(SIFTGPU REQUIRED)
 find_package(OpenCV 3 REQUIRED)
 find_package(PCL 1.8 REQUIRED)
