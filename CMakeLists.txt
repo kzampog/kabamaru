@@ -17,19 +17,12 @@ link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 include_directories(include)
+file(GLOB src_files src/*.cpp)
 
 set(LIB_NAME "sisyphus")
 
-add_library(${LIB_NAME} SHARED src/sift_engine.cpp
-                               src/graph_utilities.cpp
-                               src/io_utilities.cpp
-                               src/registration_utilities.cpp
-                               src/pointcloud_utilities.cpp
-                               src/box_fitting.cpp
-                               src/sift_rgbd_slam.cpp
-                               src/box_detection.cpp)
-
-target_link_libraries(${LIB_NAME} ${SIFTGPU_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} ${namaris_LIBRARIES})
+add_library(${LIB_NAME} SHARED ${src_files})
+target_link_libraries(${LIB_NAME} ${SIFTGPU_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} ${namaris_LIBRARIES} ${CUDA_LIBRARIES})
 
 install(TARGETS ${LIB_NAME} LIBRARY DESTINATION /usr/local/lib)
 install(DIRECTORY include/ DESTINATION /usr/local/include)
