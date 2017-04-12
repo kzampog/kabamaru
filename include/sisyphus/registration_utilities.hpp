@@ -292,52 +292,52 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rg
 
 template <typename PointT>
 void pointCloudToRGBDImages(const typename pcl::PointCloud<PointT>::ConstPtr &cloud, const cv::Size &im_size, const Eigen::Matrix3f &K, const Eigen::Matrix4f &pose, cv::Mat &rgb_img, cv::Mat &depth_img) {
-    typename pcl::PointCloud<PointT>::Ptr cloud_t(new pcl::PointCloud<PointT>);
-    pcl::transformPointCloud(*cloud, *cloud_t, pose);
+	typename pcl::PointCloud<PointT>::Ptr cloud_t(new pcl::PointCloud<PointT>);
+	pcl::transformPointCloud(*cloud, *cloud_t, pose);
 
-    rgb_img = cv::Mat(im_size, CV_8UC3, cv::Scalar(0));
-    depth_img = cv::Mat(im_size, CV_16UC1, cv::Scalar(0));
+	rgb_img = cv::Mat(im_size, CV_8UC3, cv::Scalar(0));
+	depth_img = cv::Mat(im_size, CV_16UC1, cv::Scalar(0));
 
-    PointT pt;
-    int row, col;
-    float d;
-    for (int i = 0; i < cloud_t->points.size(); ++i) {
-        pt = cloud_t->points[i];
-        row = std::round(pt.y*K(1,1)/pt.z + K(1,2));
-        col = std::round(pt.x*K(0,0)/pt.z + K(0,2));
-        if (row >= 0 && row < depth_img.rows && col >= 0 && col < depth_img.cols) {
-            d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
-            if (pt.z >= 0.0 && (d == 0.0 || pt.z < d)) {
-                depth_img.at<unsigned short>(row,col) = (unsigned short)std::round((pt.z*1000.0));
-                rgb_img.at<cv::Vec3b>(row,col)[0] = (unsigned char)pt.b;
-                rgb_img.at<cv::Vec3b>(row,col)[1] = (unsigned char)pt.g;
-                rgb_img.at<cv::Vec3b>(row,col)[2] = (unsigned char)pt.r;
-            }
-        }
-    }
+	PointT pt;
+	int row, col;
+	float d;
+	for (int i = 0; i < cloud_t->points.size(); ++i) {
+		pt = cloud_t->points[i];
+		row = std::round(pt.y*K(1,1)/pt.z + K(1,2));
+		col = std::round(pt.x*K(0,0)/pt.z + K(0,2));
+		if (row >= 0 && row < depth_img.rows && col >= 0 && col < depth_img.cols) {
+			d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
+			if (pt.z >= 0.0 && (d == 0.0 || pt.z < d)) {
+				depth_img.at<unsigned short>(row,col) = (unsigned short)std::round((pt.z*1000.0));
+				rgb_img.at<cv::Vec3b>(row,col)[0] = (unsigned char)pt.b;
+				rgb_img.at<cv::Vec3b>(row,col)[1] = (unsigned char)pt.g;
+				rgb_img.at<cv::Vec3b>(row,col)[2] = (unsigned char)pt.r;
+			}
+		}
+	}
 }
 
 template <typename PointT>
 void pointCloudToDepthImage(const typename pcl::PointCloud<PointT>::ConstPtr &cloud, const cv::Size &im_size, const Eigen::Matrix3f &K, const Eigen::Matrix4f &pose, cv::Mat &depth_img) {
-    typename pcl::PointCloud<PointT>::Ptr cloud_t(new pcl::PointCloud<PointT>);
-    pcl::transformPointCloud(*cloud, *cloud_t, pose);
+	typename pcl::PointCloud<PointT>::Ptr cloud_t(new pcl::PointCloud<PointT>);
+	pcl::transformPointCloud(*cloud, *cloud_t, pose);
 
-    depth_img = cv::Mat(im_size, CV_16UC1, cv::Scalar(0));
+	depth_img = cv::Mat(im_size, CV_16UC1, cv::Scalar(0));
 
-    PointT pt;
-    int row, col;
-    float d;
-    for (int i = 0; i < cloud_t->points.size(); ++i) {
-        pt = cloud_t->points[i];
-        row = std::round(pt.y*K(1,1)/pt.z + K(1,2));
-        col = std::round(pt.x*K(0,0)/pt.z + K(0,2));
-        if (row >= 0 && row < depth_img.rows && col >= 0 && col < depth_img.cols) {
-            d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
-            if (pt.z >= 0.0 && (d == 0.0 || pt.z < d)) {
-                depth_img.at<unsigned short>(row,col) = (unsigned short)std::round((pt.z*1000.0));
-            }
-        }
-    }
+	PointT pt;
+	int row, col;
+	float d;
+	for (int i = 0; i < cloud_t->points.size(); ++i) {
+		pt = cloud_t->points[i];
+		row = std::round(pt.y*K(1,1)/pt.z + K(1,2));
+		col = std::round(pt.x*K(0,0)/pt.z + K(0,2));
+		if (row >= 0 && row < depth_img.rows && col >= 0 && col < depth_img.cols) {
+			d = ((float)(depth_img.at<unsigned short>(row,col)))/1000.0;
+			if (pt.z >= 0.0 && (d == 0.0 || pt.z < d)) {
+				depth_img.at<unsigned short>(row,col) = (unsigned short)std::round((pt.z*1000.0));
+			}
+		}
+	}
 }
 
 #endif /* REGISTRATION_UTILITIES_HPP */
