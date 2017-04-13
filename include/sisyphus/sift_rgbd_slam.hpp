@@ -68,7 +68,7 @@ public:
 	void setMaxICPIterations(int n_iter);
 	void setICPDistanceThreshold(float thresh);
 	void setModelResolution(float res);
-	void setNormalRadius(float rad);
+	void setNormalEstimationRadius(float rad);
 	void setMLSRadius(float rad);
 	void setMLSPolynomialFit(bool mls_poly);
 
@@ -83,7 +83,7 @@ public:
 	int getMaxICPIterations();
 	float getICPDistanceThreshold();
 	float getModelResolution();
-	float getNormalRadius();
+	float getNormalEstimationRadius();
 	float getMLSRadius();
 	bool getMLSPolynomialFit();
 

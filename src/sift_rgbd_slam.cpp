@@ -82,7 +82,7 @@ void SLAM::setModelResolution(float res) {
 	model_res = res;
 }
 
-void SLAM::setNormalRadius(float rad) {
+void SLAM::setNormalEstimationRadius(float rad) {
 	normal_radius = rad;
 }
 
@@ -138,7 +138,7 @@ float SLAM::getModelResolution() {
 	return model_res;
 }
 
-float SLAM::getNormalRadius() {
+float SLAM::getNormalEstimationRadius() {
 	return normal_radius;
 }
 
