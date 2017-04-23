@@ -305,6 +305,35 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rg
 	return res;
 }
 
+template<typename PointT>
+cv::Mat organizedPointCloudToCvMat(const typename pcl::PointCloud<PointT>::ConstPtr &cloud) {
+	cv::Mat cv_cloud(cloud->height, cloud->width, CV_32FC3);
+	for (int row = 0; row < cv_cloud.rows; ++row) {
+		for (int col = 0; col < cv_cloud.cols; ++col) {
+            PointT pt = cloud->at(col,row);
+			cv_cloud.at<cv::Vec3f>(row,col) = cv::Vec3f(pt.x, pt.y, pt.z);
+		}
+	}
+	return cv_cloud;
+}
+
+template<typename PointT>
+typename pcl::PointCloud<PointT>::Ptr cvMatToOrganizedPointCloud(const cv::Mat &cv_cloud) {
+	typename pcl::PointCloud<PointT>::Ptr pcl_cloud;
+	pcl_cloud = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(cv_cloud.cols, cv_cloud.rows));
+	for (int row = 0; row < cv_cloud.rows; ++row) {
+		for (int col = 0; col < cv_cloud.cols; ++col) {
+			cv::Vec3f pt_cv = cv_cloud.at<cv::Vec3f>(row,col);
+			PointT pt;
+			pt.x = pt_cv[0];
+			pt.y = pt_cv[1];
+			pt.z = pt_cv[2];
+			pcl_cloud->at(col,row) = pt;
+		}
+	}
+	return pcl_cloud;
+}
+
 template <typename PointT>
 void pointCloudToRGBDImages(const typename pcl::PointCloud<PointT>::ConstPtr &cloud, const cv::Size &im_size, const Eigen::Matrix3f &K, const Eigen::Matrix4f &pose, cv::Mat &rgb_img, cv::Mat &depth_img, bool float_depth = false) {
 	typename pcl::PointCloud<PointT>::Ptr cloud_t(new pcl::PointCloud<PointT>);
