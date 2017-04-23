@@ -310,7 +310,7 @@ cv::Mat organizedPointCloudToCvMat(const typename pcl::PointCloud<PointT>::Const
 	cv::Mat cv_cloud(cloud->height, cloud->width, CV_32FC3);
 	for (int row = 0; row < cv_cloud.rows; ++row) {
 		for (int col = 0; col < cv_cloud.cols; ++col) {
-            PointT pt = cloud->at(col,row);
+			PointT pt = cloud->at(col,row);
 			cv_cloud.at<cv::Vec3f>(row,col) = cv::Vec3f(pt.x, pt.y, pt.z);
 		}
 	}
