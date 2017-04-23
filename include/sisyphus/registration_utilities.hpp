@@ -306,24 +306,35 @@ typename pcl::PointCloud<PointT>::Ptr pointCloudFromRGBDImages(const cv::Mat &rg
 }
 
 template<typename PointT>
-cv::Mat organizedPointCloudToCvMat(const typename pcl::PointCloud<PointT>::ConstPtr &cloud) {
-	cv::Mat cv_cloud(cloud->height, cloud->width, CV_32FC3);
-	for (int row = 0; row < cv_cloud.rows; ++row) {
-		for (int col = 0; col < cv_cloud.cols; ++col) {
+void organizedPointCloudToCvMat(const typename pcl::PointCloud<PointT>::ConstPtr &cloud, cv::Mat &cv_xyz) {
+	cv_xyz = cv::Mat(cloud->height, cloud->width, CV_32FC3);
+	for (int row = 0; row < cv_xyz.rows; ++row) {
+		for (int col = 0; col < cv_xyz.cols; ++col) {
 			PointT pt = cloud->at(col,row);
-			cv_cloud.at<cv::Vec3f>(row,col) = cv::Vec3f(pt.x, pt.y, pt.z);
+			cv_xyz.at<cv::Vec3f>(row,col) = cv::Vec3f(pt.x, pt.y, pt.z);
 		}
 	}
-	return cv_cloud;
 }
 
 template<typename PointT>
-typename pcl::PointCloud<PointT>::Ptr cvMatToOrganizedPointCloud(const cv::Mat &cv_cloud) {
-	typename pcl::PointCloud<PointT>::Ptr pcl_cloud;
-	pcl_cloud = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(cv_cloud.cols, cv_cloud.rows));
-	for (int row = 0; row < cv_cloud.rows; ++row) {
-		for (int col = 0; col < cv_cloud.cols; ++col) {
-			cv::Vec3f pt_cv = cv_cloud.at<cv::Vec3f>(row,col);
+void organizedColoredPointCloudToCvMats(const typename pcl::PointCloud<PointT>::ConstPtr &cloud, cv::Mat &cv_rgb, cv::Mat &cv_xyz) {
+	cv_rgb = cv::Mat(cloud->height, cloud->width, CV_8UC3);
+	cv_xyz = cv::Mat(cloud->height, cloud->width, CV_32FC3);
+	for (int row = 0; row < cv_xyz.rows; ++row) {
+		for (int col = 0; col < cv_xyz.cols; ++col) {
+			PointT pt = cloud->at(col,row);
+			cv_rgb.at<cv::Vec3b>(row,col) = cv::Vec3b(pt.b, pt.g, pt.r);
+			cv_xyz.at<cv::Vec3f>(row,col) = cv::Vec3f(pt.x, pt.y, pt.z);
+		}
+	}
+}
+
+template<typename PointT>
+void cvMatToOrganizedPointCloud(const cv::Mat &cv_xyz, typename pcl::PointCloud<PointT>::Ptr &pcl_cloud) {
+	pcl_cloud = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(cv_xyz.cols, cv_xyz.rows));
+	for (int row = 0; row < cv_xyz.rows; ++row) {
+		for (int col = 0; col < cv_xyz.cols; ++col) {
+			cv::Vec3f pt_cv = cv_xyz.at<cv::Vec3f>(row,col);
 			PointT pt;
 			pt.x = pt_cv[0];
 			pt.y = pt_cv[1];
@@ -331,7 +342,25 @@ typename pcl::PointCloud<PointT>::Ptr cvMatToOrganizedPointCloud(const cv::Mat &
 			pcl_cloud->at(col,row) = pt;
 		}
 	}
-	return pcl_cloud;
+}
+
+template<typename PointT>
+void cvMatsToOrganizedColoredPointCloud(const cv::Mat &cv_rgb, const cv::Mat &cv_xyz, typename pcl::PointCloud<PointT>::Ptr &pcl_cloud) {
+	pcl_cloud = typename pcl::PointCloud<PointT>::Ptr(new pcl::PointCloud<PointT>(cv_xyz.cols, cv_xyz.rows));
+	for (int row = 0; row < cv_xyz.rows; ++row) {
+		for (int col = 0; col < cv_xyz.cols; ++col) {
+			cv::Vec3b rgb = cv_rgb.at<cv::Vec3b>(row,col);
+			cv::Vec3f pt_cv = cv_xyz.at<cv::Vec3f>(row,col);
+			PointT pt;
+			pt.x = pt_cv[0];
+			pt.y = pt_cv[1];
+			pt.z = pt_cv[2];
+			pt.r = rgb[2];
+			pt.g = rgb[1];
+			pt.b = rgb[0];
+			pcl_cloud->at(col,row) = pt;
+		}
+	}
 }
 
 template <typename PointT>
