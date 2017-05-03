@@ -1,7 +1,7 @@
 #include <stack>
 #include <algorithm>
 
-#include <sisyphus/graph_utilities.hpp>
+#include <kabamaru/graph_utilities.hpp>
 
 std::vector<std::vector<int> > adjacencyListFromAdjacencyMatrix(const std::vector<std::vector<char> > &adj_mat) {
 	std::vector<std::vector<int> > adj_list;

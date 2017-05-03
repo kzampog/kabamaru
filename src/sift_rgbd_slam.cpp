@@ -1,6 +1,6 @@
-#include <sisyphus/sift_rgbd_slam.hpp>
-#include <sisyphus/pointcloud_utilities.hpp>
-#include <sisyphus/io_utilities.hpp>
+#include <kabamaru/sift_rgbd_slam.hpp>
+#include <kabamaru/pointcloud_utilities.hpp>
+#include <kabamaru/io_utilities.hpp>
 
 #include <opencv2/highgui/highgui.hpp>
 #include <pcl/io/pcd_io.h>

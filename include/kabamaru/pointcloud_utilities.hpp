@@ -10,7 +10,7 @@
 #include <pcl/registration/transformation_estimation_point_to_plane_lls.h>
 #include <pcl/surface/mls.h>
 
-#include <sisyphus/registration_utilities.hpp>
+#include <kabamaru/registration_utilities.hpp>
 
 template<typename PointT>
 typename pcl::PointCloud<PointT>::Ptr extractPointCloudFromIndices(const typename pcl::PointCloud<PointT>::ConstPtr &cloud_in, const std::vector<int> &inlier_ind, bool neg, bool keep_org) {

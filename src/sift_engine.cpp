@@ -2,7 +2,7 @@
 #include <GL/gl.h>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#include <sisyphus/sift_engine.hpp>
+#include <kabamaru/sift_engine.hpp>
 
 SIFTEngine::SIFTEngine() {
 	matcher = SiftMatchGPU(4096);

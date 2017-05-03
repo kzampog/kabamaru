@@ -1,4 +1,4 @@
-#include <sisyphus/registration_utilities.hpp>
+#include <kabamaru/registration_utilities.hpp>
 
 Eigen::Matrix4f homogeneousTransformationMatrixFromRt(const Eigen::Matrix3f &R, const Eigen::Vector3f &t) {
 	Eigen::Matrix4f tform = Eigen::Matrix4f::Identity();

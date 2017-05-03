@@ -1,4 +1,4 @@
-#include <sisyphus/box_detection.hpp>
+#include <kabamaru/box_detection.hpp>
 
 std::vector<Eigen::Vector3f> extractNormalsWithOrthogonalCounterpart(const std::vector<Eigen::Vector3f> &normals, float angle_thresh) {
 	int n = normals.size();

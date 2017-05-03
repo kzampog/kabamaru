@@ -1,4 +1,4 @@
-#include <sisyphus/rgbd_reader.hpp>
+#include <kabamaru/rgbd_reader.hpp>
 #include <opencv2/videoio/videoio_c.h>
 
 RGBDReader::RGBDReader() {

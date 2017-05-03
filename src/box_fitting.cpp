@@ -1,1 +1,1 @@
-#include <sisyphus/box_fitting.hpp>
+#include <kabamaru/box_fitting.hpp>

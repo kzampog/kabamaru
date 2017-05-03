@@ -4,8 +4,8 @@
 #include <chrono>
 #include <random>
 
-#include <sisyphus/graph_utilities.hpp>
-#include <sisyphus/pointcloud_utilities.hpp>
+#include <kabamaru/graph_utilities.hpp>
+#include <kabamaru/pointcloud_utilities.hpp>
 
 #include <pcl/segmentation/extract_clusters.h>
 

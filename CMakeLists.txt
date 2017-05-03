@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(sisyphus)
+project(kabamaru)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
@@ -19,7 +19,7 @@ add_definitions(${PCL_DEFINITIONS})
 include_directories(include)
 file(GLOB src_files src/*.cpp)
 
-set(LIB_NAME "sisyphus")
+set(LIB_NAME "kabamaru")
 
 add_library(${LIB_NAME} SHARED ${src_files})
 target_link_libraries(${LIB_NAME} ${SIFTGPU_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} ${namaris_LIBRARIES} ${CUDA_LIBRARIES})

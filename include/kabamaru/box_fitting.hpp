@@ -2,7 +2,7 @@
 #define BOX_FITTING_HPP
 
 #include <set>
-#include <sisyphus/pointcloud_utilities.hpp>
+#include <kabamaru/pointcloud_utilities.hpp>
 #include <pcl/surface/convex_hull.h>
 
 template<typename PointT>

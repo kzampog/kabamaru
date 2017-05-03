@@ -4,7 +4,7 @@
 #include <queue>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
-#include <sisyphus/sift_engine.hpp>
+#include <kabamaru/sift_engine.hpp>
 
 class SLAM {
 
