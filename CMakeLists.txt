@@ -24,8 +24,8 @@ set(LIB_NAME "kabamaru")
 add_library(${LIB_NAME} SHARED ${src_files})
 target_link_libraries(${LIB_NAME} ${SIFTGPU_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} ${namaris_LIBRARIES} ${CUDA_LIBRARIES})
 
-install(TARGETS ${LIB_NAME} LIBRARY DESTINATION /usr/local/lib)
-install(DIRECTORY include/ DESTINATION /usr/local/include)
+install(TARGETS ${LIB_NAME} LIBRARY DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include)
 
 # uninstall target
 configure_file(
