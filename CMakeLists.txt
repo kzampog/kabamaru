@@ -12,11 +12,17 @@ find_package(OpenCV 3 REQUIRED)
 find_package(PCL 1.8 REQUIRED)
 find_package(namaris REQUIRED)
 
+include_directories(${CUDA_INCLUDE_DIRS})
+include_directories(${SIFTGPU_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${PCL_INCLUDE_DIRS})
+include_directories(${namaris_INCLUDE_DIRS})
+
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
 include_directories(include)
+
 file(GLOB src_files src/*.cpp)
 
 set(LIB_NAME "kabamaru")
